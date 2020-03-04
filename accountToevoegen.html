@@ -16,7 +16,6 @@
     <div class="card text-white bg-dark mb-3 mx-auto" style="max-width: 18rem;">
       <div class="card-header">Voeg een rekening toe</div>
       <div class="card-body">
-        <form>
           <div class="form-group">
             <label for="inputID">Klant ID:</label>
             <input type="id" class="form-control" id="inputID">
@@ -29,14 +28,40 @@
               <option>Creditcard</option>
             </select>
           </div>
-          <button type="submit" class="btn btn-primary">Verzenden</button>
-        </form>
+          <button class="btn btn-primary" onclick="rekeningToevoegen()">Verzenden</button>
       </div>
     <br>
 
+    <script>
 
+      function rekeningToevoegen() {
 
+        var http = new XMLHttpRequest();
+        var klantId = document.getElementById("inputID").value;
 
+        var url = 'http://173.212.208.199:9000/acc/toevoegen/' + klantId;
+        var params = {};
+        params.klantId = klantId
+        params.accountType = document.getElementById("formOptions").value
+
+        http.open('POST', url, true);
+
+        console.log(params)
+
+        http.setRequestHeader('Content-type', 'application/json');
+
+        http.onreadystatechange = function() {
+         if(http.readyState == 4 && http.status == 200) {
+           alert(http.responseText);
+          }
+        }
+        
+        var paramsJson = JSON.stringify(params);
+        http.send(paramsJson);
+
+      }
+
+    </script>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

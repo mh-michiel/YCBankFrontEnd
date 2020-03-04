@@ -16,17 +16,45 @@
     <div class="card text-white bg-dark mb-3 mx-auto" style="max-width: 18rem;">
       <div class="card-header">Voeg een klant toe</div>
       <div class="card-body">
-        <form>
           <div class="form-group">
             <label for="inputVoornaam">Voornaam:</label>
             <input type="id" class="form-control" id="inputVoornaam">
             <label for="inputAchternaam">Achternaam:</label>
             <input type="id" class="form-control" id="inputAchternaam">
           </div>
-          <button type="submit" class="btn btn-primary">Verzenden</button>
-        </form>
+          <button class="btn btn-primary" onclick="klantToevoegen()">Verzenden</button>
       </div>
     <br>
+
+    <script>
+
+      function klantToevoegen() {
+
+        var http = new XMLHttpRequest();
+        var url = 'http://173.212.208.199:9000/customer/add';
+        var params = {};
+        params.firstName = document.getElementById("inputVoornaam").value;
+        params.lastName = document.getElementById("inputAchternaam").value;
+
+        http.open('POST', url, true);
+
+        console.log(params)
+
+        http.setRequestHeader('Content-type', 'application/json');
+
+        http.onreadystatechange = function() {
+         if(http.readyState == 4 && http.status == 200) {
+           alert(http.responseText);
+          }
+        }
+        
+        var paramsJson = JSON.stringify(params);
+        http.send(paramsJson);
+
+      }
+
+    </script>
+
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
