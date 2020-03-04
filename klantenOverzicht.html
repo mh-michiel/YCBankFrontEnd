@@ -11,12 +11,14 @@
         -->
         <script>
             function showArray(arr) {
-                var out = "";
+                var out = "<TABLE BORDER=\"1\">";
                 var i;
                 for(i = 0; i < arr.length; i++) {
-                    out += '<a>' +arr[i].firstName + ' ' + arr[i].lastName + '</a><br>';
+                    out += '<TR> <TD>' +arr[i].id + '. </TD> <TD>' + arr[i].firstName +' '+arr[i].lastName + '</TD> </TR>';
                     //out += '<a href="' + arr[i].firstName + '">' + arr[i].lastName + '</a><br>';
                 }
+
+                out+="</TABLE>";
                 document.getElementById("id01").innerHTML = out;
             }
             
