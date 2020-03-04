@@ -1,0 +1,133 @@
+
+<HTML>
+    <HEAD>
+        <TITLE>Dit is mijn eerste homepage</TITLE>
+    </HEAD>
+    <BODY>
+
+
+        <!--
+            vanaf hier is copy
+        -->
+        <script>
+            function showArray(arr) {
+                var out = "";
+                var i;
+                for(i = 0; i < arr.length; i++) {
+                    out += '<a>' +arr[i].firstName + ' ' + arr[i].lastName + '</a><br>';
+                    //out += '<a href="' + arr[i].firstName + '">' + arr[i].lastName + '</a><br>';
+                }
+                document.getElementById("id01").innerHTML = out;
+            }
+            
+            function jojo(){
+                alert("hallo");
+                var xhr = new XMLHttpRequest();
+                var url = "http://173.212.208.199:9000/customer/displayall";
+
+                xhr.onreadystatechange = function(){
+                    
+                    if(xhr.readyState == 4){//only get data when ready
+                        var data = JSON.parse(this.responseText);
+                        //document.write(data[0].firstName);
+                        showArray(data)
+                        //document.getElementById("mijniddiv").innerHTML = this.responseText;
+                    }
+                    
+                };
+
+                xhr.open("GET", url, true);
+                xhr.send();
+
+            }
+        </script>
+
+        <div id="id01">
+        </div>
+
+
+        <button onclick="jojo()">Refresh</button>
+        
+
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        
+        <script>
+
+
+
+            /*
+
+
+
+
+        var xmlhttp = new XMLHttpRequest();
+        var url = "http://173.212.208.199:9000/customer/displayall";
+
+        //demo array for testing how to display this array
+        var dataArray = [{
+        "display": "JavaScript Tutorial",
+        "url": "https://www.w3schools.com/js/default.asp"
+        },
+        {
+        "display": "HTML Tutorial",
+        "url": "https://www.w3schools.com/html/default.asp"
+        },
+        {
+        "display": "CSS Tutorial",
+        "url": "https://www.w3schools.com/css/default.asp"
+        }];
+        
+        var xmlHttp = new XMLHttpRequest();
+        xmlHttp.onreadystatechange = function() {
+        if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+            document.getElementById('output').innerHTML = JSON.parse(xmlHttp.responseText).total;
+        }
+        xmlHttp.open("GET", url, true);
+        xmlHttp.send();
+
+        
+
+        /*
+        xmlhttp.open("GET", url, true);
+        xmlhttp.send();
+        document.write(xmlhttp.response());
+
+        $(document).ready(function(){
+        $("button").click(function(){
+            $.getJSON(url, function(result){
+            $.each(result, function(i, field){
+                $("div").append(field + " ");
+            });
+            });
+        });
+        });
+        
+        
+        function myFunction(arr) {
+            var out = "";
+            var i;
+            for(i = 0; i < arr.length; i++) {
+                out += '<a href="' + arr[i].url + '">' +
+                arr[i].display + '</a><br>';
+                document.write("ik ben hier\n")
+            }
+            document.getElementById("id01").innerHTML = out;
+        }
+
+        myFunction(dataArray);
+
+        $.getJSON(url, function(data) {
+            document.write(data)
+        });
+        */
+        
+        </script>
+
+                
+        <div id="container">
+            <div id="output">NO DATA</div>
+        </div>
+
+    </BODY>
+</HTML>
