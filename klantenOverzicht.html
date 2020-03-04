@@ -4,6 +4,12 @@
         <TITLE>Dit is mijn eerste homepage</TITLE>
     </HEAD>
     <BODY>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
 
         <!--
@@ -11,10 +17,10 @@
         -->
         <script>
             function showArray(arr) {
-                var out = "<TABLE BORDER=\"1\">";
+                var out = "<table class=\"table\">";
                 var i;
                 for(i = 0; i < arr.length; i++) {
-                    out += '<TR> <TD>' +arr[i].id + '. </TD> <TD>' + arr[i].firstName +' '+arr[i].lastName + '</TD> </TR>';
+                    out += '<TR> <TD> <a href="file:///C:/Users/User/Desktop/YCBankFrontend/Startpagina.html">' +arr[i].id + '. </a> </TD> <TD>' + arr[i].firstName +' </TD> <TD> '+arr[i].lastName +'  </TD> </TR>';
                     //out += '<a href="' + arr[i].firstName + '">' + arr[i].lastName + '</a><br>';
                 }
 
@@ -49,87 +55,10 @@
 
 
         <button onclick="jojo()">Refresh</button>
-        
 
-
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-        
-        <script>
-
-
-
-            /*
-
-
-
-
-        var xmlhttp = new XMLHttpRequest();
-        var url = "http://173.212.208.199:9000/customer/displayall";
-
-        //demo array for testing how to display this array
-        var dataArray = [{
-        "display": "JavaScript Tutorial",
-        "url": "https://www.w3schools.com/js/default.asp"
-        },
-        {
-        "display": "HTML Tutorial",
-        "url": "https://www.w3schools.com/html/default.asp"
-        },
-        {
-        "display": "CSS Tutorial",
-        "url": "https://www.w3schools.com/css/default.asp"
-        }];
-        
-        var xmlHttp = new XMLHttpRequest();
-        xmlHttp.onreadystatechange = function() {
-        if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
-            document.getElementById('output').innerHTML = JSON.parse(xmlHttp.responseText).total;
-        }
-        xmlHttp.open("GET", url, true);
-        xmlHttp.send();
-
-        
-
-        /*
-        xmlhttp.open("GET", url, true);
-        xmlhttp.send();
-        document.write(xmlhttp.response());
-
-        $(document).ready(function(){
-        $("button").click(function(){
-            $.getJSON(url, function(result){
-            $.each(result, function(i, field){
-                $("div").append(field + " ");
-            });
-            });
-        });
-        });
-        
-        
-        function myFunction(arr) {
-            var out = "";
-            var i;
-            for(i = 0; i < arr.length; i++) {
-                out += '<a href="' + arr[i].url + '">' +
-                arr[i].display + '</a><br>';
-                document.write("ik ben hier\n")
-            }
-            document.getElementById("id01").innerHTML = out;
-        }
-
-        myFunction(dataArray);
-
-        $.getJSON(url, function(data) {
-            document.write(data)
-        });
-        */
-        
-        </script>
-
-                
-        <div id="container">
-            <div id="output">NO DATA</div>
-        </div>
-
+        <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+     
     </BODY>
 </HTML>
