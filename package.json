@@ -1,0 +1,29 @@
+{
+  "name": "yc-bank-frontend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "es-dev-server --node-resolve --open --watch",
+    "start:build": "cd dist && es-dev-server --open",
+    "build": "rimraf dist && rollup -c rollup.config.js"
+  },
+  "devDependencies": {
+    "@open-wc/building-rollup": "^0.21.0",
+    "es-dev-server": "^1.42.0",
+    "rimraf": "^2.6.3",
+    "rollup": "^1.15.4",
+    "rollup-plugin-copy": "^3.3.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mh-michiel/YCBankFrontEnd.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mh-michiel/YCBankFrontEnd/issues"
+  },
+  "homepage": "https://github.com/mh-michiel/YCBankFrontEnd#readme"
+}
