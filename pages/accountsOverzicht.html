@@ -3,7 +3,7 @@
     <HEAD>
         <TITLE>Accounts overview</TITLE>
     </HEAD>
-    <BODY>
+    <BODY onload="jojo();">
         <!-- Required meta tags -->
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -22,8 +22,7 @@
                     
                 var i;
                 for(i = 0; i < arr.length; i++) {
-                    out += '<TR> <TD> <a href="./index.html">' +arr[i].id + '. </a> </TD> <TD>' + arr[i].iban +' </TD> <TD> '+ arr[i].owner.firstName +' '+ arr[i].owner.lastName +' </TD> <TD> '+arr[i].balance +'  </TD> </TR>';//owner ext moet er nog bij
-                    //de href moet nog vervangen worden naar de correcte endpoint. Hij moet naar een specefiek account verwijzen door het id mee te geven aan de endpoint
+                    out += '<TR> <TD> <a href="./klantDetails/'+arr[i].id+'.html">' +arr[i].id + '. </a> </TD> <TD>' + arr[i].iban +' </TD> <TD> '+ arr[i].owner.firstName +' '+ arr[i].owner.lastName +' </TD> <TD> '+arr[i].balance +'  </TD> </TR>';//owner ext moet er nog bij
                 }
 
                 out+="</TABLE>";
@@ -31,7 +30,6 @@
             }
             
             function jojo(){
-                alert("hallo");
                 var xhr = new XMLHttpRequest();
                 var url = "http://173.212.208.199:9000/display/all/accounts/";
 
