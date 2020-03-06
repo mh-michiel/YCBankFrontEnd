@@ -15,10 +15,8 @@
         iets.src = `./pages/${paginaTitel}.html`;
       }
 
-
-
-
-    </script>
+      </script>
+      <script src="index.js"></script>
   </head>
   <body>
 
@@ -40,8 +38,8 @@
                   Toevoegen
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <a onclick=link("klantToevoegen") class="dropdown-item">Een nieuw klant</a>
-                  <a onclick=link("accountToevoegen") class="dropdown-item">Een nieuwe bankrekening (bij een bestaande klant)</a>
+                  <a onclick="link('klantToevoegen')" class="dropdown-item">Een nieuw klant</a>
+                  <a onclick="link('accountToevoegen')" class="dropdown-item">Een nieuwe bankrekening (bij een bestaande klant)</a>
                 </div>
               </li>
               <li class="nav-item dropdown">
@@ -49,8 +47,8 @@
                   Bekijken
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <a onclick=link("klantenOverzicht") class="dropdown-item">Op klantniveau</a>
-                  <a onclick=link("accountsOverzicht") class="dropdown-item">Op accountniveau</a>
+                  <a onclick="link('klantenOverzicht')" class="dropdown-item">Op klantniveau</a>
+                  <a onclick="link('accountsOverzicht')" class="dropdown-item">Op accountniveau</a>
                 </div>
               </li>
             <form class="form-inline my-2 my-lg-0">
