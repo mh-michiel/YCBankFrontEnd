@@ -12,7 +12,7 @@
   </head>
   <body>
 
-    <div class="card text-white bg-dark mb-3 mx-auto" style="max-width: 18rem;">
+    <div class="card text-white bg-dark mb-3 mx-auto" style="max-width: 18rem; margin-top: 150px">
       <div class="card-header">Voeg een rekening toe</div>
       <div class="card-body">
           <div class="form-group">
@@ -34,15 +34,19 @@
     <script>
 
       function rekeningToevoegen() {
+        
+        function getAccountType() {
 
-        let accountType = document.getElementById("formOptions").value
+          let accountType = document.getElementById("formOptions").value
 
-        if (accountType == Debitrekening) {
-          accountType = 0
-        } if (accountType == Spaarrekening) {
-        accountType = 1
-        } if (accountType  == Creditcard) {
-        accountType = 2
+          if (accountType === "Debitrekening") {
+            return accountType = "DEBITACCOUNT"
+          } if (accountType ==="Spaarrekening") {
+            return accountType = "SAVINGSACCOUNT"
+          } if (accountType  === "Creditcard") {
+            return accountType = "CREDITCARD"
+          }
+
         }
 
         var http = new XMLHttpRequest();
@@ -51,7 +55,7 @@
         var url = 'http://173.212.208.199:9000/add/account/to/customerid/' + klantId;
         var params = {};
         params.id = klantId
-        params.accountType = document.getElementById("formOptions").value
+        params.accountType = getAccountType()
 
         http.open('POST', url, true);
 
