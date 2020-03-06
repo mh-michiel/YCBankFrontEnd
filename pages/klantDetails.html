@@ -54,15 +54,16 @@
             var xhr = new XMLHttpRequest()
             xhr.onreadystatechange = function() {
                 if (xhr.readyState == 4) {
-                    var response = JSON.parse(this.responseText);
-                    console.log("eyyyy", response);
-                    alert("Customer deleted")
+                    alert(this.responseText)
 
                 }
             };
+
+            var idClientJson = JSON.stringify(parseInt(idClient))
+            console.log(idClientJson)
             xhr.open(
                 "DELETE",
-                `http://173.212.208.199:9000/delete/customerid/${idClient}`,
+                `http://173.212.208.199:9000/delete/customerid/${idClientJson}`,
                 true
             );
             xhr.send();
