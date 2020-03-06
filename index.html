@@ -12,8 +12,16 @@
     <script>
       function link(paginaTitel){
         var iets = document.getElementById("inFrame");
-        iets.src = `./pages/${paginaTitel}.html`;
+        iets.src = `./pages/${paginaTitel}`;
       }
+
+      function klantZoek(){
+        var value = document.getElementById("zoekBalk").value;
+        link(`zoekResultaat.html?param1=${value}`)
+        }
+      
+
+      
 
 
     </script>
@@ -38,8 +46,8 @@
                   Toevoegen
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <a onclick="link('klantToevoegen')" class="dropdown-item">Een nieuw klant</a>
-                  <a onclick="link('accountToevoegen')" class="dropdown-item">Een nieuwe bankrekening (bij een bestaande klant)</a>
+                  <a onclick="link('klantToevoegen.html')" class="dropdown-item">Een nieuw klant</a>
+                  <a onclick="link('accountToevoegen.html')" class="dropdown-item">Een nieuwe bankrekening (bij een bestaande klant)</a>
                 </div>
               </li>
               <li class="nav-item dropdown">
@@ -47,13 +55,13 @@
                   Bekijken
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <a onclick="link('klantenOverzicht')" class="dropdown-item">Op klantniveau</a>
-                  <a onclick="link('accountsOverzicht')" class="dropdown-item">Op accountniveau</a>
+                  <a onclick="link('klantenOverzicht.html')" class="dropdown-item">Op klantniveau</a>
+                  <a onclick="link('accountsOverzicht.html')" class="dropdown-item">Op accountniveau</a>
                 </div>
               </li>
             <form class="form-inline my-2 my-lg-0">
-              <input class="form-control mr-sm-2" type="search" placeholder="Klant zoeken" aria-label="Search">
-              <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+              <input id="zoekBalk" class="form-control mr-sm-2" type="search" placeholder="Klant zoeken" aria-label="Search">
+              <button type="button" class="btn btn-outline-success my-2 my-sm-0" onclick="klantZoek()">Search</button>
             </form>
           </div>
         </nav>
