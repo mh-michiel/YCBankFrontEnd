@@ -9,85 +9,115 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 
-<body>
+<body onload="getAccountFromAccountId(getParamValue('param1'))">
+    <h1>Account Details</h1>
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Klant</h5>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item" id="id">ID:</li>
+                        <li class="list-group-item" id="voornaam">Voornaam:</li>
+                        <li class="list-group-item" id="achternaam">Achternaam:</li>
+                    </ul>
+                    <br />
+                    <a href="#" class="btn btn-primary" onclick="deleteAccount(getParamValue('param1'))">Verwijder account</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Account Details</h5>
+                    <p class="card-text" id="tablecard">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item" id="idAccount">ID:</li>
+                            <li class="list-group-item" id="iban">IBAN:</li>
+                            <li class="list-group-item" id="type">Type:</li>
+                            <li class="list-group-item" id="balance">Balance:</li>
+                            <li class="list-group-item" id="dateOpened">Date opened:</li>
+                            <li class="list-group-item" id="debitInterest">Debit interest:</li>
+                            <li class="list-group-item" id="creditInterest">Credit interest:</li>
+                        </ul>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    <script>
-        function getParamValue(paramName) {
-            var url = window.location.search.substring(1)
-            var qArray = url.split(`&`);
-            for (var i = 0; i < qArray.length; i++) {
-                var pArr = qArray[i].split(`=`);
-                if (pArr[0] == paramName)
-                    return pArr[1];
-            }
-        }
+    <body>
 
-        function deleteCustomer(idClient) {
-            var xhr = new XMLHttpRequest()
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState == 4) {
-                    var response = JSON.parse(this.responseText);
-                    console.log("eyyyy", response);
-
+        <script>
+            function getParamValue(paramName) {
+                var url = window.location.search.substring(1)
+                var qArray = url.split(`&`);
+                for (var i = 0; i < qArray.length; i++) {
+                    var pArr = qArray[i].split(`=`);
+                    if (pArr[0] == paramName)
+                        return pArr[1];
                 }
-            };
-            xhr.open(
-                "DELETE",
-                `http://173.212.208.199:9000/delete/customerid/${idClient}`,
-                true
-            );
-            xhr.send();
-        }
-
-        function showAccounts(accounts) {
-            var out = "<table class=\"table\">";
-            out += '<TR> <TH> Account ID </TH> <TH> Account Type </TH> <TH> IBAN </TH> <TH> Balance </TH> </TR>'; //owner ext moet er nog bij
-
-            var i;
-            for (i = 0; i < accounts.length; i++) {
-                out += '<TR> <TD> <a href="./index.html">' + accounts[i].id + '. </a> </TD> <TD>' + accounts[i].accountType + '</TD> <TD>' + accounts[i].iban + '</TD> <TD> ' + accounts[i].balance + '</TD>';
             }
 
-            out += "</TABLE>";
-            document.getElementById("tablecard").innerHTML = out;
-        }
+            function deleteAccount(idAccount) {
+                var xhr = new XMLHttpRequest()
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState == 4) {
+                        console.log("eyyyy", this.response);
+                        alert(this.response)
 
-        function getAccountsFromClient(idClient) {
-            var xhr = new XMLHttpRequest();
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState == 4) {
-                    var accounts = JSON.parse(this.responseText);
-                    console.log(accounts);
+                    }
+                };
 
-                    document.getElementById("id").innerHTML = `ID: ${idClient}`;
-                    document.getElementById(
-                        "voornaam"
-                    ).innerHTML = `Voornaam: ${accounts[0].owner.firstName}`;
-                    document.getElementById(
-                        "achternaam"
-                    ).innerHTML = `Achternaam: ${accounts[0].owner.lastName}`;
+                let idAccountJson = JSON.stringify(parseInt(idAccount))
+                xhr.open(
+                    "DELETE",
+                    `http://173.212.208.199:9000/delete/accountid/${idAccountJson}`,
+                    true
+                );
+                xhr.send();
+            }
 
-                    showAccounts(accounts)
+            function getAccountFromAccountId(idAccount) {
+                var xhr = new XMLHttpRequest();
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState == 4) {
+                        var account = JSON.parse(this.responseText);
+                        console.log(account);
 
-                }
-            };
-            xhr.open(
-                "GET",
-                `http://173.212.208.199:9000/display/all/accounts/of/customerid/${idClient}`,
-                true
-            );
-            xhr.send();
-        }
-    </script>
+                        document.getElementById("id").innerHTML = `ID: ${account.owner.id}`;
+                        document.getElementById(
+                            "voornaam"
+                        ).innerHTML = `Voornaam: ${account.owner.firstName}`;
+                        document.getElementById(
+                            "achternaam"
+                        ).innerHTML = `Achternaam: ${account.owner.lastName}`;
+                        document.getElementById("idAccount").innerHTML = `ID: ${idAccount}`
+                        document.getElementById("iban").innerHTML = `IBAN: ${account.iban}`
+                        document.getElementById("type").innerHTML = `Type: ${account.accountType}`
+                        document.getElementById("balance").innerHTML = `Balance: ${account.balance}`
+                        document.getElementById("dateOpened").innerHTML = `Date opened: ${account.datOpened}`
+                        document.getElementById("debitInterest").innerHTML = `Debit interest: ${account.debitInterest}`
+                        document.getElementById("creditInterest").innerHTML = `Credit interest: ${account.creditInterest}`
 
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-</body>
+                    }
+                };
+                xhr.open(
+                    "GET",
+                    `http://173.212.208.199:9000/info/accountid/${idAccount}`,
+                    true
+                );
+                xhr.send();
+            }
+        </script>
+
+        <!-- Optional JavaScript -->
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    </body>
 
 </html>
