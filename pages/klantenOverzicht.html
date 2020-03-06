@@ -3,7 +3,7 @@
     <HEAD>
         <TITLE>Dit is mijn eerste homepage</TITLE>
     </HEAD>
-    <BODY>
+    <BODY onload="jojo();">
         <!-- Required meta tags -->
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -18,10 +18,10 @@
         <script>
             function showArray(arr) {
                 var out = "<table class=\"table\">";
+                    out += '<TR> <TH> Klant ID </TH> <TH> Voornaam </TH> <TH> Achternaam </TH> </TR>';
                 var i;
                 for(i = 0; i < arr.length; i++) {
-                    out += '<TR> <TD> <a href="./index.html">' +arr[i].id + '. </a> </TD> <TD>' + arr[i].firstName +' </TD> <TD> '+arr[i].lastName +'  </TD> </TR>';
-                    //de href moet nog vervangen worden naar de correcte endpoint. Hij moet naar een specefiek account verwijzen door het id mee te geven aan de endpoint
+                    out += '<TR> <TD> <a href="./klantDetails/'+arr[i].id+'.html">' +arr[i].id + '. </a> </TD> <TD>' + arr[i].firstName +' </TD> <TD> '+arr[i].lastName +'  </TD> </TR>';
                 }
 
                 out+="</TABLE>";
@@ -29,7 +29,6 @@
             }
             
             function jojo(){
-                alert("hallo");
                 var xhr = new XMLHttpRequest();
                 var url = "http://173.212.208.199:9000/display/all/customers";
 
@@ -53,7 +52,7 @@
         <div id="id01">
         </div>
 
-
+        
         <button onclick="jojo()">Refresh</button>
 
         <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
