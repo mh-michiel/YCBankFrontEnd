@@ -1,0 +1,79 @@
+<HTML>
+    <HEAD >
+    </HEAD>
+    <BODY onload="ophalen()">
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <link rel="stylesheet" href="../style.css">
+
+        <!--
+            vanaf hier is copy
+        -->
+
+        
+        <script>
+            function showArray(arr) {
+                var out = `<table class=\"table\">`;
+                var i;
+                out += '<tr align="center"><th>Acount ID</th><th>Transactie ID</th><th>Bedrag</th></tr>'
+                for(i = 0; i < arr.length; i++) {
+                    if (arr[i].incoming){
+                        var type = 'bijschrift'; 
+                        var sign = '+'
+                    }else{
+                        var type = 'afschrift'; 
+                        var sign = '-';
+
+                    }
+                    out += `<TR class="${type}" align="center"> <TD> ` +arr[i].account.id + '. </a> </TD> <TD>' + arr[i].id +` </TD> <TD> ${sign}` + ' €' + arr[i].amount +' </TD> </TR>';
+                    //de href moet nog vervangen worden naar de correcte endpoint. Hij moet naar een specefiek account verwijzen door het id mee te geven aan de endpoint
+                }
+
+                out+="</TABLE>";
+                document.getElementById("id01").innerHTML = out;
+            }
+            
+            function getParamValue(paramName) {
+            var url = window.location.search.substring(1)
+            var qArray = url.split(`&`);
+            for (var i = 0; i < qArray.length; i++) {
+                var pArr = qArray[i].split(`=`);
+                if (pArr[0] == paramName)
+                    return pArr[1];
+            }
+        }
+
+            function ophalen(){
+                var id = getParamValue('param1')
+                var xhr = new XMLHttpRequest();
+                var url = `http://173.212.208.199:9000/display/transactions/accountid/${id}`;
+
+                xhr.onreadystatechange = function(){
+                    
+                    if(xhr.readyState == 4){//only get data when ready
+                        var data = JSON.parse(this.responseText);
+                        //document.write(data[0].firstName);
+                        showArray(data)
+                        //document.getElementById("mijniddiv").innerHTML = this.responseText;
+                    }
+                    
+                };
+
+                xhr.open("GET", url, true);
+                xhr.send();
+
+            }
+        </script>
+
+        <div id="id01">
+        </div>
+        <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+     
+    </BODY>
+</HTML>
