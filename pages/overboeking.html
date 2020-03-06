@@ -9,7 +9,7 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="../style.css">
 </head>
 
 <body>
@@ -18,8 +18,17 @@
             var http = new XMLHttpRequest();
             
             var bedrag = document.getElementById("bedrag").value; 
+            if (!document.getElementById("bedrag").checkValidity())
+                {
+                    alert("Er klopt wat niet aan je bedrag!")
+                }
+            if (document.getElementById("destinationIban").checkValidity())
+                {
+                    alert("Vul een bestemming in!")
+                }
             var iban = document.getElementById("destinationIban").value;
             var id = document.getElementById("originID").value; 
+            var dateCreated = new Date();
 
             var url = `http://173.212.208.199:9000/do/transaction/accountid/${id}`
 
@@ -27,6 +36,8 @@
             overboeking.amount = bedrag; 
             overboeking.contraAccount = iban;
             overboeking.id=id;
+            overboeking.dateCreated = dateCreated;
+
 
             http.open('POST', url, true);
 
@@ -43,13 +54,24 @@
 
             var overboekingJson = JSON.stringify(overboeking);
             http.send(overboekingJson);
-}
-    </script>
+           }
+</script>
+<form>
+    <div class = "form-group">
+    <label for="originID">Van welk ID moet het komen?</label>
+    <input class="form-control" id="originID" type="number" placeholder="ID"></input><br>
 
-    <input id="originID" type="number" placeholder="van welk ID moet het komen"></input>
-    <input id="bedrag" type="number" placeholder="Bedrag"></input>
-    <input id="destinationIban" type="text" placeholder="AccountID"></input>
+    <label for="bedrag">Welk bedrag wil je overmaken?</label>
+    <input class="form-control" id="bedrag" type="number" placeholder="Bedrag" min="1"></input><br>
+
+    <label for="destinationIban">Naar welk IBAN wil je geld overmaken?</label>
+    <input class="form-control" id="destinationIban" type="text" placeholder="IBAN"></input><br>
+
+    <label for="description">Voer een bescrhijving in:</label> 
+    <input class="form-control" id="description" type="text" placeholder="Beschrijving"></input><br>
     <button type="button" onclick="overboek()">Maak geld over</button>
+    </div>
+</form>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
