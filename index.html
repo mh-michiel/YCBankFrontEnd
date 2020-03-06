@@ -10,9 +10,9 @@
 
     <title>Welkom bij Young Colfield</title>
     <script>
-      function link(yoyo){
+      function link(paginaTitel){
         var iets = document.getElementById("inFrame");
-        iets.src = yoyo;
+        iets.src = `./pages/${paginaTitel}.html`;
       }
 
 
@@ -38,8 +38,8 @@
                   Toevoegen
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <a href="./pages/klantToevoegen.html" class="dropdown-item">Een nieuw klant</a>
-                  <a href="./pages/accountToevoegen.html" class="dropdown-item">Een nieuwe bankrekening (bij een bestaande klant)</a>
+                  <a onclick="link('klantToevoegen')" class="dropdown-item">Een nieuw klant</a>
+                  <a onclick="link('accountToevoegen')" class="dropdown-item">Een nieuwe bankrekening (bij een bestaande klant)</a>
                 </div>
               </li>
               <li class="nav-item dropdown">
@@ -47,8 +47,8 @@
                   Bekijken
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <a href="./pages/klantenOverzicht.html" class="dropdown-item">Op klantniveau</a>
-                  <a href="./pages/accountsOverzicht.html" class="dropdown-item">Op accountniveau</a>
+                  <a onclick="link('klantenOverzicht')" class="dropdown-item">Op klantniveau</a>
+                  <a onclick="link('accountsOverzicht')" class="dropdown-item">Op accountniveau</a>
                 </div>
               </li>
             <form class="form-inline my-2 my-lg-0">
