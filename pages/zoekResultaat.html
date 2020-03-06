@@ -1,6 +1,6 @@
 
 <HTML>
-    <HEAD >
+    <HEAD>
     </HEAD>
     <BODY onload="jojo();">
         <!-- Required meta tags -->
@@ -15,12 +15,22 @@
             vanaf hier is copy
         -->
         <script>
+            function getParamValue(paramName) {
+                var url = window.location.search.substring(1)
+                var qArray = url.split(`&`);
+                for (var i = 0; i<qArray.length; i++){
+                    var pArr = qArray[i].split(`=`);
+                    if (pArr[0] == paramName)
+                    return pArr[1];
+                }
+            }
+
             function showArray(arr) {
                 var out = "<table class=\"table\">";
-                    out += '<TR> <TH> Klant ID </TH> <TH> Voornaam </TH> <TH> Achternaam </TH> </TR>';
                 var i;
                 for(i = 0; i < arr.length; i++) {
-                    out += '<TR> <TD> <a href="./klantDetails/'+arr[i].id+'.html">' +arr[i].id + '. </a> </TD> <TD>' + arr[i].firstName +' </TD> <TD> '+arr[i].lastName +'  </TD> </TR>';
+                    out += '<TR> <TD> <a href="./index.html">' +arr[i].id + '. </a> </TD> <TD>' + arr[i].firstName +' </TD> <TD> '+arr[i].lastName +'  </TD> </TR>';
+                    //de href moet nog vervangen worden naar de correcte endpoint. Hij moet naar een specefiek account verwijzen door het id mee te geven aan de endpoint
                 }
 
                 out+="</TABLE>";
@@ -28,8 +38,9 @@
             }
             
             function jojo(){
+                var name = getParamValue("param1") 
                 var xhr = new XMLHttpRequest();
-                var url = "http://173.212.208.199:9000/display/all/customers";
+                var url = `http://173.212.208.199:9000/search/customer/${name}`;
 
                 xhr.onreadystatechange = function(){
                     
@@ -46,13 +57,13 @@
                 xhr.send();
 
             }
+
+
         </script>
 
         <div id="id01">
         </div>
 
-        
-        <button onclick="jojo()">Refresh</button>
 
         <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
