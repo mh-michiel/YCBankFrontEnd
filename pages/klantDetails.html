@@ -1,17 +1,24 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <title>Title</title>
     <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" type="text/css" href="style.css" />
   </head>
   <body onload="getAccounts()">
-    
     <h1>Klant details</h1>
     <div class="row">
       <div class="col-sm-6">
@@ -19,10 +26,11 @@
           <div class="card-body">
             <h5 class="card-title">Klant</h5>
             <ul class="list-group list-group-flush">
-              <li class="list-group-item">ID: </li>
-              <li class="list-group-item">Voornaam: </li>
-              <li class="list-group-item">Achternaam: </li>
-            </ul><br>
+              <li class="list-group-item">ID:</li>
+              <li class="list-group-item">Voornaam:</li>
+              <li class="list-group-item">Achternaam:</li>
+            </ul>
+            <br />
             <a href="#" class="btn btn-primary">Verwijder klant</a>
           </div>
         </div>
@@ -31,65 +39,83 @@
         <div class="card">
           <div class="card-body">
             <h5 class="card-title">Accounts</h5>
-            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+            <p class="card-text">
+              With supporting text below as a natural lead-in to additional
+              content.
+            </p>
           </div>
         </div>
       </div>
     </div>
 
-<script>
-
-function getAccounts() {
+    <script>
+      function getAccounts() {
         var xhr = new XMLHttpRequest();
-        xhr.onreadystatechange = function(){
-                console.log(this.responseText);
-                var accounts = JSON.parse(this.responseText);
+        xhr.onreadystatechange = function() {
+          if(xhr.readyState == 4){
+          console.log(this.responseText);
+          var accounts = JSON.parse(this.responseText);
 
-                document.getElementById("output").innerHTML = accounts[0].id;
+          document.getElementById("output").innerHTML = accounts[0].id;
 
-                var output = "";
+          var output = "";
 
-                for(var x=0;x<accounts.length;x++){
-                  output += accounts[x].IBAN;
-                }
-            };
-            xhr.open("GET", "http://173.212.208.199:9000/customer/displayall/9", true);
-            xhr.send();
+          for (var x = 0; x < accounts.length; x++) {
+            output += accounts[x].IBAN;
+          }
+          let table = document.querySelector("table");
+            let data = Object.keys(accounts[0]);
+            generateTableHead(table, data);
+            generateTable(table, accounts);
+          }
+        };
+        xhr.open(
+          "GET",
+          "http://173.212.208.199:9000/customer/displayall/9",
+          true
+        );
+        xhr.send();
       }
 
+      function generateTableHead(table, data) {
+        let thead = table.createTHead();
+        let row = thead.insertRow();
+        for (let key of data) {
+          let th = document.createElement("th");
+          let text = document.createTextNode(key);
+          th.appendChild(text);
+          row.appendChild(th);
+        }
+      }
 
-function generateTableHead(table, data) {
-  let thead = table.createTHead();
-  let row = thead.insertRow();
-  for (let key of data) {
-    let th = document.createElement("th");
-    let text = document.createTextNode(key);
-    th.appendChild(text);
-    row.appendChild(th);
-  }
-}
+      function generateTable(table, data) {
+        for (let element of data) {
+          let row = table.insertRow();
+          for (key in element) {
+            let cell = row.insertCell();
+            let text = document.createTextNode(element[key]);
+            cell.appendChild(text);
+          }
+        }
+      }
+    </script>
 
-function generateTable(table, data) {
-  for (let element of data) {
-    let row = table.insertRow();
-    for (key in element) {
-      let cell = row.insertCell();
-      let text = document.createTextNode(element[key]);
-      cell.appendChild(text);
-    }
-  }
-}
-
-let table = document.querySelector("table");
-let data = Object.keys(accounts[0]);
-generateTableHead(table, data);
-generateTable(table, accounts);
-</script>
-      
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+      crossorigin="anonymous"
+    ></script>
   </body>
 </html>
