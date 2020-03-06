@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
 </head>
 
-<body onload="getAccountsFromClient(9)">
+<body onload="getAccountsFromClient(getParamValue('param1'))">
     <h1>Klant details</h1>
     <div class="row">
         <div class="col-sm-6">
@@ -24,7 +24,7 @@
                         <li class="list-group-item" id="achternaam">Achternaam:</li>
                     </ul>
                     <br />
-                    <a href="#" class="btn btn-primary">Verwijder klant</a>
+                    <a href="#" class="btn btn-primary" onclick="deleteCustomer(getParamValue('param1'))">Verwijder klant</a>
                 </div>
             </div>
         </div>
@@ -40,14 +40,42 @@
     </div>
 
     <script>
+        function getParamValue(paramName) {
+            var url = window.location.search.substring(1)
+            var qArray = url.split(`&`);
+            for (var i = 0; i < qArray.length; i++) {
+                var pArr = qArray[i].split(`=`);
+                if (pArr[0] == paramName)
+                    return pArr[1];
+            }
+        }
+
+        function deleteCustomer(idClient) {
+            var xhr = new XMLHttpRequest()
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == 4) {
+                    var response = JSON.parse(this.responseText);
+                    console.log("eyyyy", response);
+
+                }
+            };
+            xhr.open(
+                "DELETE",
+                `http://173.212.208.199:9000/delete/customerid/${idClient}`,
+                true
+            );
+            xhr.send();
+        }
+
+        // delete/customerid/{id}
+
         function showAccounts(accounts) {
             var out = "<table class=\"table\">";
             out += '<TR> <TH> Account ID </TH> <TH> Account Type </TH> <TH> IBAN </TH> <TH> Balance </TH> </TR>'; //owner ext moet er nog bij
 
             var i;
             for (i = 0; i < accounts.length; i++) {
-                out += '<TR> <TD> <a href="./index.html">' + accounts[i].id + '. </a> </TD> <TD>' + accounts[i].accountType + '</TD> <TD>' + accounts[i].iban + '</TD> <TD> ' + accounts[i].balance + '</TD>'; //owner ext moet er nog bij
-                //de href moet nog vervangen worden naar de correcte endpoint. Hij moet naar een specefiek account verwijzen door het id mee te geven aan de endpoint
+                out += '<TR> <TD> <a href="./index.html">' + accounts[i].id + '. </a> </TD> <TD>' + accounts[i].accountType + '</TD> <TD>' + accounts[i].iban + '</TD> <TD> ' + accounts[i].balance + '</TD>';
             }
 
             out += "</TABLE>";
